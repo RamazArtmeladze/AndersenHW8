@@ -1,16 +1,32 @@
 package com.app.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "\"Ticket\"")
 public class Ticket {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
-    private String ticketType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ticket_type", nullable = false)
+    private TicketType ticketType;
+
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
-    public Ticket(int id, int userId, String ticketType, LocalDateTime creationDate) {
+
+    public Ticket() {}
+
+    public Ticket(int id, User user, TicketType ticketType, LocalDateTime creationDate) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
@@ -23,19 +39,19 @@ public class Ticket {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getTicketType() {
+    public TicketType getTicketType() {
         return ticketType;
     }
 
-    public void setTicketType(String ticketType) {
+    public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
     }
 
@@ -51,7 +67,7 @@ public class Ticket {
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", user=" + user +
                 ", ticketType='" + ticketType + '\'' +
                 ", creationDate=" + creationDate +
                 '}';
