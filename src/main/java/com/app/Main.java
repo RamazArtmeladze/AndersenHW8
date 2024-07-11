@@ -6,6 +6,9 @@ import com.app.model.Ticket;
 import com.app.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.ResourceLoader;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,7 +25,7 @@ public class Main {
                 Ticket ticket = dao.fetchTicketsByUserId(1).get(0);
                 System.out.println(ticket);
 
-                dao.updateUserAndTickets(1, "John Doe1", ticket.getId(), "MONTH");
+                dao.updateUserAndCreateTicket(1, "John Doe1", "MONTH");
 
                 user = dao.fetchUserById(1);
                 System.out.println("Updated User: " + user);
@@ -34,6 +37,10 @@ public class Main {
             } else {
                 System.out.println("User not found.");
             }
+
+            ResourceLoader resourceLoader = context;
+            List<Ticket> tickets = dao.loadTicketsFromFile(resourceLoader, "classpath:tickets.json");
+            tickets.forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         }

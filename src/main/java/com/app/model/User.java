@@ -7,6 +7,9 @@ public class User {
     private String name;
     private LocalDateTime creationDate;
 
+    public User() {
+    }
+
     public User(int id, String name, LocalDateTime creationDate) {
         this.id = id;
         this.name = name;
@@ -45,5 +48,4 @@ public class User {
                 ", creationDate=" + creationDate +
                 '}';
     }
-
 }
